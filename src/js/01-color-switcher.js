@@ -1,36 +1,28 @@
-const startButton = document.querySelector('[data-start]');
-const stopButton = document.querySelector('[data-stop]');
+const bodyEl = document.querySelector('body');
+const startButtonEl = document.querySelector('[data-start]');
+const stopButtonEl = document.querySelector('[data-stop]');
 
-let intervalId = null;
+let intervalTimeColor;
 
-startButton.addEventListener('click', toggleColorSwitch);
-stopButton.addEventListener('click', toggleColorSwitch);
-
-function toggleColorSwitch() {
-  if (intervalId) {
-    clearInterval(intervalId);
-    intervalId = null;
-    startButton.disabled = false;
-  } else {
-    startButton.disabled = true;
-    intervalId = setInterval(changeBackgroundColor, 1000);
-  }
-}
+const handleClickStart = () => {
 
 function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, '0')}`;
-}
-function changeBackgroundColor() {
-  const gradient = getRandomGradient();
-  document.body.style.background = gradient;
+  return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}`;
 }
 
-function getRandomGradient() {
-  const angle = Math.floor(Math.random() * 400);
-  const color1 = getRandomHexColor();
-  const color2 = getRandomHexColor();
+intervalTimeColor = setInterval(() => {
+    bodyEl.style.backgroundColor = getRandomHexColor();
+  }, 1000);
 
-  return `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+    startButtonEl.removeEventListener('click', handleClickStart)
 }
+
+
+const handleClickStop = () => {
+clearInterval(intervalTimeColor);
+startButtonEl.addEventListener('click', handleClickStart)
+}
+
+
+startButtonEl.addEventListener('click', handleClickStart);
+stopButtonEl.addEventListener('click', handleClickStop);
