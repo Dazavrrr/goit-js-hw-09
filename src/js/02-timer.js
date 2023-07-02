@@ -10,6 +10,8 @@ const secondsEl = document.querySelector('[data-seconds]');
 
 startButtonEl.disabled = true;
 
+let countdownIntervalId;
+
 const options = {
     enableTime: true,
     time_24hr: true,
@@ -17,8 +19,6 @@ const options = {
     minuteIncrement: 1,
   
     onClose(selectedDates) {
-      console.log(selectedDates[0]);
-
       const currentDate = new Date();
 
       selectedDates.forEach((date) => {
@@ -48,10 +48,6 @@ const options = {
   
     return { days, hours, minutes, seconds };
   }
-  
-  console.log(convertMs(2000));
-  console.log(convertMs(140000));
-  console.log(convertMs(24140000));
 
   const addZero = (value) => {
     return value.toString().padStart(2, '0');
